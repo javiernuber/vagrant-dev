@@ -1,0 +1,5 @@
+#roles/sites/meta/main.yml
+---
+dependencies:
+  - { role: php, php_packages: [php5-dev, php-apc, php5-sqlite, php5-xsl, php5-gd] }
+  - apache

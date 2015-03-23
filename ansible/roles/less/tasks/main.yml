@@ -1,0 +1,4 @@
+#roles/less/tasks/main.yml
+---
+- name: install less
+  npm: name=less global=yes

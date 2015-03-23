@@ -1,0 +1,21 @@
+#roles/ubuntu-common/tasks/main.yml
+---
+- name: update apt
+  apt: update_cache=yes
+
+- name: make sure python-software-properties is installed
+  apt: name=python-software-properties state=latest
+
+- name: setting es_ES locale
+  shell: locale-gen es_ES.UTF-8
+
+- name: adding system packages
+  apt: name={{ item }} state=latest
+  with_items: ubuntu_sys_packages
+
+- name: adding ppas
+  apt_repository: repo={{ item }}
+  with_items: ubuntu_apt_repositories
+
+- name: update apt
+  apt: update_cache=yes

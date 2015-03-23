@@ -1,0 +1,14 @@
+#provision.yml
+---
+- hosts: all
+  sudo: true
+
+  roles:
+    - ubuntu-common
+    - php
+    - composer
+    - drush
+    - nodejs
+    - less
+    - apache
+    - sites

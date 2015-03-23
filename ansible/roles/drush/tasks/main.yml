@@ -1,0 +1,19 @@
+#roles/drush/tasks/main.yml
+---
+- name: Drush | Clone Drush from GitHub.
+  git: repo=https://github.com/drush-ops/drush.git dest=/usr/local/share/drush version=6.5.0
+
+- name: Drush | Install Drush dependencies with Composer.
+  shell: >
+    /usr/local/bin/composer install --prefer-source --no-interaction
+    chdir=/usr/local/share/drush
+    creates=/usr/local/share/drush/vendor/autoload.php
+
+- name: download artefact from website
+  get_url: url="http://download.pear.php.net/package/Console_Table-1.1.3.tgz" dest="/usr/local/share/drush/lib/"
+
+- name: extract artefact under /usr/local
+  unarchive: copy=no src="/usr/local/share/drush/lib/Console_Table-1.1.3.tgz" dest="/usr/local/share/drush/lib/"
+
+- name: Drush | Create drush symlink.
+  file: src=/usr/local/share/drush/drush dest=/usr/local/bin/drush state=link

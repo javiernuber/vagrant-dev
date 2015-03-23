@@ -1,0 +1,8 @@
+#roles/apache/tasks/main.yml
+---
+- name: install package
+  apt: name=apache2 state=latest
+
+- name: copy new envvars
+  template: src=envvars dest=/etc/apache2/envvars owner=root group=root force=yes
+  notify: restart apache

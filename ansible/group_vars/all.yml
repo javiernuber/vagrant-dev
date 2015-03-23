@@ -1,0 +1,4 @@
+#roles/group_vars/all.yml
+---
+apache_user: www-data
+apache_group: www-data

@@ -1,0 +1,14 @@
+#roles/sites/tasks/main.yml
+---
+- name: enable rewrite module
+  shell: a2enmod rewrite
+  notify: restart apache
+
+- name: delete all sites enableds
+  shell: rm -fr /etc/apache2/sistes-enabled/*
+  notify: restart apache
+
+- name: copy default site
+  template: src=default.conf dest=/etc/apache2/sites-enabled/{{ item.host_name }}.conf owner=root group=root force=yes
+  with_items: regular_sites
+  notify: restart apache

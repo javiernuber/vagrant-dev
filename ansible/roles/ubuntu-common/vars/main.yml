@@ -1,0 +1,4 @@
+#roles/ubuntu-common/defaults/main.yml
+---
+ubuntu_sys_packages: [git, build-essential]
+ubuntu_apt_repositories: []

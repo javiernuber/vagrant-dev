@@ -1,0 +1,7 @@
+#roles/node/tasks/main.yml
+---
+- name: adding sources
+  shell: curl -sL https://deb.nodesource.com/setup | sudo bash -
+
+- name: installing nodejs and npm
+  apt: name=nodejs state=latest

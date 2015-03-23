@@ -1,0 +1,4 @@
+#roles/less/tasks/main.yml
+---
+dependencies:
+  - nodejs

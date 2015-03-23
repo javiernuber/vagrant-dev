@@ -1,0 +1,5 @@
+#roles/drush/tasks/main.yml
+---
+dependencies:
+  - php
+  - composer

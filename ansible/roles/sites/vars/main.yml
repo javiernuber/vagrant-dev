@@ -1,0 +1,6 @@
+#roles/sites/vars/main.yml
+---
+regular_sites: 
+  - {host_name: local.dev, host_root: /proyectos/}
+
+symfony_sites: []

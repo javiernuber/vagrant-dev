@@ -1,0 +1,4 @@
+#roles/composer/tasks/main.yml
+---
+dependencies:
+  - php
