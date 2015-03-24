@@ -5,7 +5,7 @@
   notify: restart apache
 
 - name: delete all sites enableds
-  shell: rm -fr /etc/apache2/sistes-enabled/*
+  shell: rm -fr /etc/apache2/sites-enabled/*
   notify: restart apache
 
 - name: copy default site
