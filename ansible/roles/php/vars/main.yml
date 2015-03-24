@@ -1,3 +1,4 @@
 #roles/php/defaults/main.yml
 ---
+php_ppa: ''
 php_packages: []

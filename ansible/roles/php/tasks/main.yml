@@ -1,5 +1,11 @@
 #roles/php/taks/main.yml
 ---
+
+# add apt-repository for special php Version
+- name: Upgrade for php different Versions  
+  apt_repository: repo="{{ php_ppa }}"
+  when: php_ppa != ''
+
 - name: install php
   apt: name=php5 state=latest
 
