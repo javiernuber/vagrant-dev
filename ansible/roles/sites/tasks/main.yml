@@ -8,7 +8,9 @@
   shell: rm -fr /etc/apache2/sites-enabled/*
   notify: restart apache
 
-- name: copy default site
-  template: src=default.conf dest=/etc/apache2/sites-enabled/{{ item.host_name }}.conf owner=root group=root force=yes
-  with_items: regular_sites
+- name: copy default sites apache
+  template: src=apache_{{ apache_version }}.conf dest=/etc/apache2/sites-enabled/{{ item.host_name }}.conf owner=root group=root force=yes
+  with_items: apache_sites
+  when: apache_sites|length > 0
   notify: restart apache
+

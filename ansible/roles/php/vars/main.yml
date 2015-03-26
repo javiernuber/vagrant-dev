@@ -2,3 +2,4 @@
 ---
 php_ppa: ''
 php_packages: []
+php_vars: []

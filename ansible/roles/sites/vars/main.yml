@@ -1,6 +1,6 @@
 #roles/sites/vars/main.yml
 ---
-regular_sites: 
-  - {host_name: local.dev, host_root: /proyectos/}
+apache_version: 2.2
 
-symfony_sites: []
+apache_sites: 
+  - {host_name: local.dev, host_root: /proyectos/}

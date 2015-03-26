@@ -1,11 +1,23 @@
 # Vagrant hostname and IP configuration.
-vagrant_hostname: drupaltest.dev
+#vagrant_box: ubuntu/trusty64
+vagrant_box: ubuntu/precise64
+vagrant_hostname: develop
 vagrant_ip: 192.168.33.10
 
 # Memory and CPU to use for this VM.
 vagrant_memory: 2048
 vagrant_cpus: 2
 
+# Local Folder with the projetcs
+local_folder_projects: /Users/javi/Sites/
+
 # Apache config
+apache_version: 2.2
 apache_user: vagrant
 apache_group: vagrant
+
+apache_sites: 
+  - {host_name: local.dev, host_root: /proyectos/}
+
+php_vars:
+  - timezone: Europe/Madrid

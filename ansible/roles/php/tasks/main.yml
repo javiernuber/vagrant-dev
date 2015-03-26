@@ -12,3 +12,8 @@
 - name: install php packages
   apt: name={{ item }} state=latest
   with_items: php_packages
+
+# - name: config php.ini
+#  lineinfile: dest=/etc/php5/apache2/php.ini
+#              regexp='date.timezone ='
+#              line='date.timezone = {{ timezone }}'  

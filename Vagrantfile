@@ -16,10 +16,11 @@ vconfig = YAML::load_file("./config.yml")
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.hostname = vconfig['vagrant_hostname']
 
-	config.vm.box = "ubuntu/trusty64"
+	config.vm.box = vconfig['vagrant_box']
 	config.vm.network "forwarded_port", guest: 80, host: 8880
 	config.vm.network :private_network, ip: vconfig['vagrant_ip']
 	config.vm.synced_folder ".", "/vagrant", type: "nfs"
+	config.vm.synced_folder vconfig['local_folder_projects'], "/proyectos", type: "nfs"
 	config.vm.provision "ansible" do |ansible|
 		ansible.playbook = "ansible/provision.yml"
 	end
