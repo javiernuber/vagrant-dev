@@ -19,11 +19,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	config.vm.box = vconfig['vagrant_box']
 	config.vm.network "forwarded_port", guest: 80, host: 8880
 	config.vm.network :private_network, ip: vconfig['vagrant_ip']
-	config.vm.synced_folder ".", "/vagrant", type: "nfs"
-	config.vm.synced_folder vconfig['local_folder_projects'], "/proyectos", type: "nfs"
+
+    if Vagrant.has_plugin?('vagrant-bindfs')
+		config.vm.synced_folder ".", "/vagrant", type: "nfs"
+		config.bindfs.bind_folder "/vagrant", "/vagrant"
+		config.vm.synced_folder vconfig['local_folder_projects'], "/proyectos", type: "nfs"
+		config.bindfs.bind_folder "/proyectos", "/proyectos"
+    else
+  		raise 'Install plugin bindfs (vagrant plugin install vagrant-bindfs)'
+	end
+
 	config.vm.provision "ansible" do |ansible|
 		ansible.playbook = "ansible/provision.yml"
 	end
+	
 	config.vm.provider "virtualbox" do |v|
 		v.memory = 2048
 		v.cpus = 2
