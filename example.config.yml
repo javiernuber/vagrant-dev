@@ -19,5 +19,14 @@ apache_group: vagrant
 apache_sites: 
   - {host_name: local.dev, host_root: /proyectos/}
 
-php_vars:
-  - timezone: Europe/Madrid
+php_config_cli:
+  - {key: date.timezone, value: Europe/Madrid}
+
+php_config_apache:
+  - {key: date.timezone, value: Europe/Madrid}
+  - {key: memory_limit, value: 256M}
+  - {key: upload_max_filesize, value: 10M}
+  - {key: post_max_size, value: 10M}
+
+
+
