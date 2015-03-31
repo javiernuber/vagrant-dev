@@ -3,10 +3,6 @@
 - name: install package
   apt: name=apache2 state=latest
 
-#- name: copy new envvars
-#  template: src=envvars dest=/etc/apache2/envvars owner=root group=root force=yes
-#  notify: restart apache
-
 - name: config envvars apache - user
   lineinfile: dest=/etc/apache2/envvars
               regexp='export APACHE_RUN_USER=www-data'
