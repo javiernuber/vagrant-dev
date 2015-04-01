@@ -1,19 +1,20 @@
 #roles/apache/tasks/main.yml
 ---
-- name: install package
+- name: Apache - install package
   apt: name=apache2 state=latest
 
-- name: config envvars apache - user
+- name: Apache - config envvars apache - user
   lineinfile: dest=/etc/apache2/envvars
               regexp='export APACHE_RUN_USER=www-data'
               line='export APACHE_RUN_USER={{ apache_user }}'
-  notify: restart apache
 
-- name: config envvars apache - group
+- name: Apache - config envvars apache - group
   lineinfile: dest=/etc/apache2/envvars
               regexp='export APACHE_RUN_GROUP=www-data'
               line='export APACHE_RUN_GROUP={{ apache_group }}'
-  notify: restart apache
+
+- name: Apache - reset
+  command: sudo rm -Rf /var/lock/apache2
 
 - name: Apache | Enable module | Enable $module
   command: a2enmod 'rewrite'
