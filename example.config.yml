@@ -1,4 +1,4 @@
-# Vagrant hostname and IP configuration.
+## VAGRANT CONFIGURATION. ##
 #vagrant_box: ubuntu/trusty64
 vagrant_box: ubuntu/precise64
 vagrant_hostname: develop
@@ -11,6 +11,10 @@ vagrant_cpus: 2
 # Local Folder with the projetcs
 local_folder_projects: /Users/javi/Sites/
 
+
+### ANSIBLE VARS ###
+ansible_tags: all
+
 # Apache config
 apache_version: 2.2
 apache_user: vagrant
@@ -19,6 +23,7 @@ apache_group: vagrant
 apache_sites: 
   - {host_name: local.dev, host_root: /proyectos/}
 
+# PHP config
 php_config_cli:
   - {key: date.timezone, value: Europe/Madrid}
 
@@ -28,5 +33,6 @@ php_config_apache:
   - {key: upload_max_filesize, value: 10M}
   - {key: post_max_size, value: 10M}
 
+drush_version: 6.6.0
 
 

@@ -1,21 +1,45 @@
 #roles/ubuntu-common/tasks/main.yml
 ---
-- name: update apt
+- name: Common - Update apt
   apt: update_cache=yes
 
-- name: make sure python-software-properties is installed
-  apt: name=python-software-properties state=latest
+- name: Common - Install System Packages
+  sudo: yes
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - curl
+    - wget
+    - python-software-properties
 
-- name: setting es_ES locale
-  shell: locale-gen es_ES.UTF-8
-
-- name: adding system packages
+- name: Common - Install Extra Packages
   apt: name={{ item }} state=latest
   with_items: ubuntu_sys_packages
 
-- name: adding ppas
+- name: Common - Adding PPA
   apt_repository: repo={{ item }}
   with_items: ubuntu_apt_repositories
 
-- name: update apt
+- name: Common - Update apt
   apt: update_cache=yes
+
+- name: Common - Setting es_ES locale
+  shell: locale-gen es_ES.UTF-8
+  
+- name: Common - Configure the timezone
+  sudo: yes
+  template: src=timezone.tpl dest=/etc/timezone
+
+- name: Common - More Configure the timezone
+  sudo: yes
+  file: src=/usr/share/zoneinfo/{{timezone}} dest=/etc/localtime state=link force=yes backup=yes
+
+- name: Common - Set the hostname in /etc/hostname
+  shell: echo {{ hostname }} > /etc/hostname
+  when: hostname is defined
+
+- name: Common - Set the hostname
+  shell: hostname {{ hostname }}
+  when: hostname is defined
+
+- name: Common - Update /etc/hosts
+  lineinfile: dest=/etc/hosts regexp='^127\.0\.0\.1' line='127.0.0.1 localhost {{ hostname }}' owner=root group=root mode=0644

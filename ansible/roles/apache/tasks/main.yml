@@ -16,6 +16,9 @@
 - name: Apache - reset
   command: sudo rm -Rf /var/lock/apache2
 
-- name: Apache | Enable module | Enable $module
-  command: a2enmod 'rewrite'
+- name: Apache | Enable modules
+  command: a2enmod '{{ item }}'
+  with_items: apache_modules
   notify: restart apache
+  when: apache_modules|length > 0
+

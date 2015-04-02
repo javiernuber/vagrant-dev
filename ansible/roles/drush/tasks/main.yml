@@ -1,22 +1,25 @@
 #roles/drush/tasks/main.yml
 ---
-- name: Drush | Clone Drush from GitHub.
-  git: repo=https://github.com/drush-ops/drush.git dest=/home/vagrant/drush version=6.5.0
 
-- name: Drush | Install Drush dependencies with Composer.
+- name: Drush - Clone Drush from GitHub.
+  git: >
+    repo=https://github.com/drush-ops/drush.git
+    dest=/usr/local/share/drush
+    version={{ drush_version }}
+
+- name: Drush - Install Drush dependencies with Composer.
   shell: >
-    /usr/local/bin/composer install --prefer-source --no-interaction
-    chdir=/home/vagrant/drush
-    creates=/home/vagrant/drush/vendor/autoload.php
+    composer install --prefer-source --no-interaction
+    chdir=/usr/local/share/drush
+    creates=/usr/local/share/drush/vendor/autoload.php
 
-- name: Drush | download Console_Table-1.1.3.tgz
-  get_url: url="http://download.pear.php.net/package/Console_Table-1.1.3.tgz" dest="/home/vagrant/Console_Table-1.1.3.tgz"
+- name: Drush - Create drush symlink.
+  file: >
+    src=/usr/local/share/drush/drush
+    dest=/usr/local/bin/drush
+    state=link
 
-- name: Drush | extract Console_Table-1.1.3.tgz
-  command: tar -xvzf /home/vagrant/Console_Table-1.1.3.tgz
-
-- name: Drush | move Console_Table-1.1.3.tgz to /home/vagrant/drush/lib/
-  command: mv /home/vagrant/Console_Table-1.1.3 /home/vagrant/drush/lib/Console_Table-1.1.3
-
-- name: Drush | Create drush symlink.
-  file: src=/home/vagrant/drush/drush dest=/usr/local/bin/drush state=link
+- name: Drush - Run drush to finish setting it up.
+  command: "/usr/local/bin/drush"
+  register: drush_result
+  changed_when: "'Execute a drush command' not in drush_result.stdout"

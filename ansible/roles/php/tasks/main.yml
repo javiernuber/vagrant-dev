@@ -2,24 +2,24 @@
 ---
 
 # add apt-repository for special php Version
-- name: Upgrade for php different Versions  
+- name: PHP - Upgrade for php different Versions  
   apt_repository: repo="{{ php_ppa }}"
   when: php_ppa != ''
 
-- name: install php
+- name: PHP - Install php
   apt: name=php5 state=latest
 
-- name: install php packages
+- name: PHP - Install php packages
   apt: name={{ item }} state=latest
   with_items: php_packages
 
-- name: config php.ini cli
+- name: PHP - Config php.ini cli
   lineinfile: dest=/etc/php5/cli/php.ini
               regexp='{{ item.key }} = '
               line='{{ item.key }} = {{ item.value }}'  
   with_items: php_config_cli
 
-- name: config php.ini apache
+- name: PHP - Config php.ini apache
   lineinfile: dest=/etc/php5/apache2/php.ini
               regexp='{{ item.key }} = '
               line='{{ item.key }} = {{ item.value }}'  

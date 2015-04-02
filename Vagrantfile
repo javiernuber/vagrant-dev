@@ -18,7 +18,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 	config.vm.box = vconfig['vagrant_box']
 	config.vm.network "forwarded_port", guest: 80, host: 8880
-	config.vm.network :private_network, ip: vconfig['vagrant_ip']
+    config.vm.network :private_network, ip: vconfig['vagrant_ip']
+    config.ssh.forward_agent = true
 
     if Vagrant.has_plugin?('vagrant-bindfs')
 		config.vm.synced_folder ".", "/vagrant", type: "nfs"
@@ -29,9 +30,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   		raise 'Install plugin bindfs (vagrant plugin install vagrant-bindfs)'
 	end
 
-	config.vm.provision "ansible" do |ansible|
-		ansible.playbook = "ansible/provision.yml"
-	end
+    #############################################################
+    # Ansible provisioning (you need to have ansible installed)
+    #############################################################
+   
+    config.vm.provision "ansible" do |ansible|
+        ansible.playbook = "ansible/provision.yml"
+        ansible.tags = vconfig['ansible_tags']
+    end
 	
 	config.vm.provider "virtualbox" do |v|
 		v.memory = 2048

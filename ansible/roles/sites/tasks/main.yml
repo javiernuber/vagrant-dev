@@ -1,16 +1,28 @@
 #roles/sites/tasks/main.yml
 ---
-- name: enable rewrite module
-  shell: a2enmod rewrite
-  notify: restart apache
-
-- name: delete all sites enableds
+- name: Sites - delete all sites enableds
   shell: rm -fr /etc/apache2/sites-enabled/*
   notify: restart apache
+  tags:
+   - sites
 
-- name: copy default sites apache
-  template: src=apache_{{ apache_version }}.conf dest=/etc/apache2/sites-enabled/{{ item.host_name }}.conf owner=root group=root force=yes
+- shell: apache2 -v
+  register: apache_version
+  tags:
+   - sites
+
+- name: Sites - Change default apache2.4 site
+  template: src=apache_2.4.conf dest=/etc/apache2/sites-enabled/{{ item.host_name }}.conf owner=root group=root force=yes
   with_items: apache_sites
-  when: apache_sites|length > 0
   notify: restart apache
-
+  when: apache_version.stdout.find('Apache/2.4.') != -1 and apache_sites|length > 0
+  tags:
+   - sites
+   
+- name: Sites - Change default apache2.2 site
+  template: src=apache_2.2.conf dest=/etc/apache2/sites-enabled/{{ item.host_name }}.conf owner=root group=root force=yes
+  with_items: apache_sites
+  notify: restart apache  
+  when: apache_version.stdout.find('Apache/2.2.') != -1 and apache_sites|length > 0
+  tags:
+   - sites
