@@ -1,6 +1,6 @@
 #roles/sites/tasks/main.yml
 ---
-- name: Sites - delete all sites enableds
+- name: SITES - delete all sites enableds
   shell: rm -fr /etc/apache2/sites-enabled/*
   notify: restart apache
   tags:
@@ -11,7 +11,7 @@
   tags:
    - sites
 
-- name: Sites - Change default apache2.4 site
+- name: SITES - Change default apache2.4 site
   template: src=apache_2.4.conf dest=/etc/apache2/sites-enabled/{{ item.host_name }}.conf owner=root group=root force=yes
   with_items: apache_sites
   notify: restart apache
@@ -19,7 +19,7 @@
   tags:
    - sites
    
-- name: Sites - Change default apache2.2 site
+- name: SITES - Change default apache2.2 site
   template: src=apache_2.2.conf dest=/etc/apache2/sites-enabled/{{ item.host_name }}.conf owner=root group=root force=yes
   with_items: apache_sites
   notify: restart apache  

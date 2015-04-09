@@ -1,0 +1,19 @@
+#roles/php/defaults/main.yml
+---
+php_ppa: ''
+php_packages:
+  - php5-dev
+  - php5-sqlite
+  - php5-mysql
+  - php5-gd
+  - php5-intl
+  - php5-xsl
+
+php_config_cli:
+  - {key: date.timezone, value: Europe/Madrid}
+
+php_config_apache:
+  - {key: date.timezone, value: Europe/Madrid}
+  - {key: memory_limit, value: 256M}
+  - {key: upload_max_filesize, value: 10M}
+  - {key: post_max_size, value: 10M}

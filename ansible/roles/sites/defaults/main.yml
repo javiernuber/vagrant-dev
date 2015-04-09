@@ -1,0 +1,4 @@
+#roles/sites/vars/main.yml
+---
+apache_sites: 
+  - {host_name: local.dev, host_root: /proyectos/}

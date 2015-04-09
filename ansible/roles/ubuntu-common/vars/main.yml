@@ -1,12 +1,3 @@
 #roles/ubuntu-common/defaults/main.yml
 ---
-ubuntu_sys_packages: 
-  - build-essential
-  - python-software-properties
-  - curl
-  - wget
-  - git
-  - vim
-
 ubuntu_apt_repositories: []
-ubuntu_timezone: Europe/Madrid

@@ -1,25 +1,25 @@
 #roles/drush/tasks/main.yml
 ---
 
-- name: Drush - Clone Drush from GitHub.
+- name: DRUSH - Clone Drush from GitHub.
   git: >
     repo=https://github.com/drush-ops/drush.git
     dest=/usr/local/share/drush
     version={{ drush_version }}
 
-- name: Drush - Install Drush dependencies with Composer.
+- name: DRUSH - Install Drush dependencies with Composer.
   shell: >
     composer install --prefer-source --no-interaction
     chdir=/usr/local/share/drush
     creates=/usr/local/share/drush/vendor/autoload.php
 
-- name: Drush - Create drush symlink.
+- name: DRUSH - Create drush symlink.
   file: >
     src=/usr/local/share/drush/drush
     dest=/usr/local/bin/drush
     state=link
 
-- name: Drush - Run drush to finish setting it up.
+- name: DRUSH - Run drush to finish setting it up.
   command: "/usr/local/bin/drush"
   register: drush_result
   changed_when: "'Execute a drush command' not in drush_result.stdout"
