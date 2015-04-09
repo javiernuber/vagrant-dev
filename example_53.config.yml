@@ -1,0 +1,19 @@
+## VAGRANT CONFIGURATION. ##
+vagrant_box: ubuntu/precise64
+vagrant_hostname: develop53
+vagrant_ip: 192.168.33.10
+
+# Memory and CPU to use for this VM.
+vagrant_memory: 2048
+vagrant_cpus: 2
+
+# Local Folder with the projetcs
+local_folder_projects: /Users/javi/Sites/
+
+# Ansible vars
+#ansible_tags: sites
+ansible_tags: all
+
+# Apache config
+apache_sites: 
+  - {host_name: local.dev, host_root: /proyectos/}

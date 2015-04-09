@@ -6,12 +6,8 @@
   apt_repository: repo="{{ php_ppa }}"
   when: php_ppa != ''
 
-- name: PHP - Install php
-  apt: name=php5 state=latest
-
-- name: PHP - Install php packages
-  apt: name={{ item }} state=latest
-  with_items: php_packages
+- name: PHP - Install php5-cli
+  apt: pkg=php5-cli state=latest
 
 - name: PHP - Config php.ini cli
   lineinfile: dest=/etc/php5/cli/php.ini
@@ -19,8 +15,15 @@
               line='{{ item.key }} = {{ item.value }}'  
   with_items: php_config_cli
 
+- name: PHP - Install php
+  apt: name=php5 state=latest
+
 - name: PHP - Config php.ini apache
   lineinfile: dest=/etc/php5/apache2/php.ini
               regexp='{{ item.key }} = '
               line='{{ item.key }} = {{ item.value }}'  
   with_items: php_config_apache
+
+- name: PHP - Install common PHP packages
+  apt: name={{ item }} state=latest
+  with_items: php_packages

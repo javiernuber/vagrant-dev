@@ -1,1 +1,1 @@
-{{timezone}}
+{{ ubuntu_timezone }}

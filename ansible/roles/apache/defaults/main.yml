@@ -1,6 +1,10 @@
 #roles/apache/vars/main.yml
 ---
-apache_user: www-data
-apache_group: www-data
+apache_user: vagrant
+apache_group: vagrant
 apache_modules: 
   - rewrite
+  - vhost_alias
+  - headers
+  - expires
+  - filter
